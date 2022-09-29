@@ -47,6 +47,13 @@ function Search() {
     const handleHideResult = () => {
         setShowResult(false);
     };
+    //Xử lý khi bấm nút cách trên input search
+    const handleOnChange = (e) => {
+        const searchValue = e.target.value;
+        if (!searchValue.startsWith(' ')) {
+            setSearchValue(searchValue);
+        }
+    };
 
     return (
         <HeadlessTippy
@@ -70,7 +77,7 @@ function Search() {
                     value={searchValue}
                     placeholder="Search accounts and videos"
                     spellCheck={false}
-                    onChange={(e) => setSearchValue(e.target.value)}
+                    onChange={handleOnChange}
                     onFocus={() => setShowResult(true)}
                 />
                 {/* // Khi có searchValue thì mới hiện icon clear, khi không có loading thì mới hiên clear*/}
@@ -89,7 +96,8 @@ function Search() {
                     </button>
                 )}
                 {loading && <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />}
-                <button className={cx('search-btn')}>
+                {/* onMouseDown bỏ hành vi focus vào ô tìm kiếm khi nhấn submit */}
+                <button className={cx('search-btn')} onMouseDown={(e) => e.preventDefault()}>
                     <SearchIcon />
                 </button>
             </div>
