@@ -56,52 +56,55 @@ function Search() {
     };
 
     return (
-        <HeadlessTippy
-            interactive
-            visible={showResult && searchResult.length > 0}
-            render={(attrs) => (
-                <div className={cx('search-result')} tabIndex="-1" {...attrs}>
-                    <PopperWrapper>
-                        <h4 className={cx('search-title')}>Accounts</h4>
-                        {searchResult.map((result) => (
-                            <AcountItem key={result.id} data={result} />
-                        ))}
-                    </PopperWrapper>
-                </div>
-            )}
-            onClickOutside={handleHideResult}
-        >
-            <div className={cx('search')}>
-                <input
-                    ref={inputRef}
-                    value={searchValue}
-                    placeholder="Search accounts and videos"
-                    spellCheck={false}
-                    onChange={handleOnChange}
-                    onFocus={() => setShowResult(true)}
-                />
-                {/* // Khi có searchValue thì mới hiện icon clear, khi không có loading thì mới hiên clear*/}
-
-                {!!searchValue && !loading && (
-                    <button
-                        className={cx('clear')}
-                        //Clear input di va focus vao
-                        onClick={() => {
-                            setSearchValue('');
-                            inputRef.current.focus();
-                            setSearchResult([]);
-                        }}
-                    >
-                        <FontAwesomeIcon icon={faCircleXmark} />
-                    </button>
+        <div>
+            <HeadlessTippy
+                interactive
+                appendTo={() => document.body}
+                visible={showResult && searchResult.length > 0}
+                render={(attrs) => (
+                    <div className={cx('search-result')} tabIndex="-1" {...attrs}>
+                        <PopperWrapper>
+                            <h4 className={cx('search-title')}>Accounts</h4>
+                            {searchResult.map((result) => (
+                                <AcountItem key={result.id} data={result} />
+                            ))}
+                        </PopperWrapper>
+                    </div>
                 )}
-                {loading && <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />}
-                {/* onMouseDown bỏ hành vi focus vào ô tìm kiếm khi nhấn submit */}
-                <button className={cx('search-btn')} onMouseDown={(e) => e.preventDefault()}>
-                    <SearchIcon />
-                </button>
-            </div>
-        </HeadlessTippy>
+                onClickOutside={handleHideResult}
+            >
+                <div className={cx('search')}>
+                    <input
+                        ref={inputRef}
+                        value={searchValue}
+                        placeholder="Search accounts and videos"
+                        spellCheck={false}
+                        onChange={handleOnChange}
+                        onFocus={() => setShowResult(true)}
+                    />
+                    {/* // Khi có searchValue thì mới hiện icon clear, khi không có loading thì mới hiên clear*/}
+
+                    {!!searchValue && !loading && (
+                        <button
+                            className={cx('clear')}
+                            //Clear input di va focus vao
+                            onClick={() => {
+                                setSearchValue('');
+                                inputRef.current.focus();
+                                setSearchResult([]);
+                            }}
+                        >
+                            <FontAwesomeIcon icon={faCircleXmark} />
+                        </button>
+                    )}
+                    {loading && <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />}
+                    {/* onMouseDown bỏ hành vi focus vào ô tìm kiếm khi nhấn submit */}
+                    <button className={cx('search-btn')} onMouseDown={(e) => e.preventDefault()}>
+                        <SearchIcon />
+                    </button>
+                </div>
+            </HeadlessTippy>
+        </div>
     );
 }
 
