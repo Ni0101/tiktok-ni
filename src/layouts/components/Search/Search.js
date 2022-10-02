@@ -17,31 +17,31 @@ function Search() {
     const [showResult, setShowResult] = useState(true);
     const [loading, setLoading] = useState(false);
 
-    const debounced = useDebounce(searchValue, 500);
+    const debouncedValue = useDebounce(searchValue, 500);
 
     const inputRef = useRef();
 
     useEffect(() => {
         //Thoát hàm trong tình huống không có search value
-        if (!debounced.trim()) {
+        if (!debouncedValue.trim()) {
             setSearchResult([]);
             return;
         }
         //Khi ng dùng gõ search thì icon loading xuất hiện
         //Xử dụng encodeURIComponent để khi ng dùng gõ những kí tự kg đúng nó sẽ mã hoá thành kí tự hợp lệ trên URL
-        // fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(debounced)}&type=less`)
+        // fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(debouncedValue)}&type=less`)
         //Thư viện Axios
         const fetchApi = async () => {
             setLoading(true);
 
-            const result = await searchServices.search(debounced);
+            const result = await searchServices.search(debouncedValue);
             setSearchResult(result);
 
             setLoading(false);
         };
 
         fetchApi();
-    }, [debounced]);
+    }, [debouncedValue]);
 
     //Xử lý khi blur ra ngoài search tippy thì kết quả tìm kiếm sẽ ẩn
     const handleHideResult = () => {
